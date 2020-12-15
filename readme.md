@@ -3,9 +3,10 @@
 This repositry is a form from zylo117's implementation of EfficientDet, which is used as the inference model for this project.
 
 
-## Pretrained weights and benchmark
+## Pretrained weights
 
-These are the links to the pretrained weights
+These are the links to the pretrained weights. 
+Please locate these weights in ./weights/-weight-.pth
 
 
 | coefficient | pth_download | GPU Mem(MB) | FPS | mAP 0.5:0.95(from zylo117) |
