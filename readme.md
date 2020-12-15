@@ -5,9 +5,8 @@ This repositry is a form from zylo117's implementation of EfficientDet, which is
 
 ## Pretrained weights and benchmark
 
-The performance is very close to the paper's, it is still SOTA.
+These are the links to the pretrained weights
 
-The speed/FPS test includes the time of post-processing with no jit/data precision trick.
 
 | coefficient | pth_download | GPU Mem(MB) | FPS | mAP 0.5:0.95(from zylo117) |
 | :-----: | :-----: | :------: | :------: | :------: | 
