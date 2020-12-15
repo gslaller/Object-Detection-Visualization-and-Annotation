@@ -5,8 +5,8 @@ This repositry is a form from zylo117's implementation of EfficientDet, which is
 
 ## Pretrained weights
 
-These are the links to the pretrained weights. 
-Please locate these weights in ./weights/-weight-.pth
+These are the links to the pretrained weights.  
+Please locate these weights in `./weights/-weight-.pth`
 
 
 | coefficient | pth_download | GPU Mem(MB) | FPS | mAP 0.5:0.95(from zylo117) |
