@@ -10,7 +10,7 @@ The performance is very close to the paper's, it is still SOTA.
 The speed/FPS test includes the time of post-processing with no jit/data precision trick.
 
 | coefficient | pth_download | GPU Mem(MB) | FPS | mAP 0.5:0.95(from zylo117) |
-| :-----: | :-----: | :------: | :------: | :------: | :-----: | :-----: |
+| :-----: | :-----: | :------: | :------: | :------: | 
 | D0 | [efficientdet-d0.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d0.pth) | 1049 | 36.20 | 33.1 
 | D1 | [efficientdet-d1.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d1.pth) | 1159 | 29.69 | 38.8 
 | D2 | [efficientdet-d2.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d2.pth) | 1321 | 26.50 | 42.1 
