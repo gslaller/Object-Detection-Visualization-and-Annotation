@@ -1,12 +1,12 @@
-# Object Detection: Visualization and Annotation
+# Object Detection: Visualization and Annotation (Under construction)
 
 This repositry is a form from zylo117's implementation of EfficientDet, which is used as the inference model for this project.
-
 
 ## Pretrained weights
 
 These are the links to the pretrained weights.  
 Please locate these weights in `./weights/-weight-.pth`
+If you have trained you own network please make the basename==`\-d[0-8]\.pth$`
 
 
 | coefficient | pth_download | GPU Mem(MB) | FPS | mAP 0.5:0.95(from zylo117) |
@@ -26,6 +26,6 @@ Please locate these weights in `./weights/-weight-.pth`
     # install requirements
     pip -r requirements.txt 
      
-    # run the simple inference script
+    # make it run
     python main.py
 
