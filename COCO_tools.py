@@ -73,7 +73,7 @@ class COCO_Annotation():
     
     def _write_yaml(self, path, data):
         with open(path, "w+") as file:
-            yaml.safe_dump(data, file)
+            yaml.safe_dump(data, file )
     
     def get_categories(self):
         data = self._load_yaml(self.project_path)
@@ -114,14 +114,15 @@ class COCO_Annotation():
             return json.load(file)
 
 class Merge_JSON_Files():
-    def __init__(self, directory, project_path, new_file_path):
+    def __init__(self, directory, project_path, new_file_path, new_project_path):
         self.dirname = directory
         self.project_path = project_path
+        self.new_project_path = new_project_path
         self.main_json = self.get_dummy_json()
         
         json_files = [os.path.join(self.dirname, e) for e in os.listdir(self.dirname) if e[:1] == "." and e[-5:] == ".json"]
         
-        self.categories = []
+        self.categories = self.load_yaml(self.project_path)['obj_list']
         self.images = []
         self.annotations = [] 
         
@@ -131,13 +132,12 @@ class Merge_JSON_Files():
         for json_file in json_files:
             self.process_file(json_file)
         
-        self.write_to_yaml()
+        self.create_new_yaml()
         self.postprocess_categories()
         
         with open(new_file_path, "w+") as file:
             json.dump(self.main_json, file)
         
-        print("done")
     
     def get_dummy_json(self):
         return {
@@ -184,7 +184,6 @@ class Merge_JSON_Files():
             image_id = self.append_image({k:v for k,v in json_data.items() if k in ['file_name', 'height', 'width']})
             
             for annotation in json_data['annotations']:
-                #this has only ca
                 self.append_annotation(annotation, image_id)
 
     def append_categories(self, category_name):
@@ -195,16 +194,20 @@ class Merge_JSON_Files():
         idx = self.categories.index(category_name)
         return idx + 1
 
-    def write_to_yaml(self):
-        with open(self.project_path, "r") as file:
-            data = yaml.safe_load(file)
-        
-        data['obj_list'] = self.categories
-        with open(self.project_path, "w+") as file:
-            yaml.safe_dump(data, file)
+    def load_yaml(self, path):
+        with open(path, "r") as file:
+            return yaml.safe_load(file)
+    
+    def write_yaml(self, path, data):
+        with open(path, "w+") as file:
+            yaml.safe_dump(data, file )
 
-    def postprocess_categories(self):
-        
+    def create_new_yaml(self):
+        data = self.load_yaml(self.project_path)
+        data['obj_list'] = self.categories
+        self.write_yaml(self.new_project_path, data)
+
+    def postprocess_categories(self):        
         res = []
         for idx, cat in enumerate(self.categories):
             res.append({
@@ -238,5 +241,5 @@ if __name__ == "__main__":
     
     for _ in range(50):
         ca.append_annotation(r_path(), random_data())
-    
-    Merge_JSON_Files("./temp", "./projects/coco_copy.yml", "something.json")
+    Merge_JSON_Files(directory_path, project_path, "something_1.json", "./projects/coco_1.yml")
+    print("done")
