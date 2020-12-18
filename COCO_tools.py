@@ -14,10 +14,13 @@ class COCO_Annotation():
     def __init__(self, directory_path, project_path):
         self.dirname = directory_path
         self.project_path = project_path
-        self.image_paths = self._list_dir(self.dirname, suf=[".png",".jpg"])
+        self.image_paths = self.get_images_path(self.dirname)
         for image_path in self.image_paths:
             _ = self._read_json(image_path)
     
+    def get_images_path(self, path):
+        return self._list_dir(self.dirname, suf=[".png", ".jpg"])
+     
     def _list_dir(self, path, pre=[""], suf=[""]):
         lsdir = os.listdir(path)
         check_pre = lambda ele: any([ele[:len(sub_ele)] == sub_ele for sub_ele in pre])
@@ -45,6 +48,7 @@ class COCO_Annotation():
     def del_annotation(self, image_path, uid):
         old_annotations = self.get_annotation(image_path)
         new_annotations = [ele for ele in old_annotations if ele['uid'] != uid]
+        self.update_annotations(image_path, new_annotations)
     
     def append_annotation(self, image_path, new_annotation):
         #new_annotation has two keys: bbox, category_name

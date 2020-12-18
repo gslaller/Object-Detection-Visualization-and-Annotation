@@ -15,11 +15,12 @@ INFERENCE = None
 if not os.path.exists(PATH_TO_IMAGES):
   os.mkdir(PATH_TO_IMAGES)
 
-@app.route("/check_dir", methods='POST')
+@app.route("/check_dir", methods=['POST'])
 def check_dir():
   path = request.get_json(force = True)['past']
   if os.path.exists(path):
-    retos.listdir(directory_path)urn "true"
+    retos.listdir(directory_path)
+    return "true"
   else:
     return "false"
 
@@ -37,7 +38,8 @@ def initalize_all():
   except:
     return "false"
 
-@app.route("/merge_all_json", methods=['POST']):
+@app.route("/merge_all_json", methods=['POST'])
+def merge_all_json():
   #mergedFile path
   #new_project_file_path
   json = request.get_json(force = True)
@@ -49,8 +51,8 @@ def initalize_all():
   except:
     return "false" 
 
-@app.route("/get_annotations", methods=['POST'])
-def get_annotations():
+@app.route("/get_annotation", methods=['POST'])
+def get_annotation():
   json = request.get_json(force = True)
   file_name = json['file_name']
   data = COCO.get_annotation(file_name)
@@ -58,13 +60,19 @@ def get_annotations():
 
 
 
-
 @app.route("/append_annotation", methods=['POST'])
 def append_annotation():
   json = request.get_json(force = True)
   file_name = json['file_name']
-  annotation = json['annotation']
+  category_name = json['category_name']
+  bbox = json['bbox']
+  print(file_name, category_name, bbox)
+  annotation = {
+    "category_name": category_name,
+    "bbox": bbox,
+  }
   COCO.append_annotation(file_name, annotation)
+  return "true" 
 
 @app.route("/remove_annotation", methods=['POST'])
 def remove_annotation():
@@ -72,10 +80,12 @@ def remove_annotation():
   uid = json['uid']
   file_name = json['file_name']
   COCO.del_annotation(file_name, uid)
+  return "true"
 
 @app.route("/list_images")
 def list_images():
-  return jsonify(os.listdir(PATH_TO_IMAGES))
+  ls = COCO.get_images_path(PATH_TO_IMAGES)
+  return jsonify(ls)
 
 @app.route("/upload_image", methods=['POST'])
 def upload():
